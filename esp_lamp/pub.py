@@ -5,7 +5,7 @@ import questionary
 
 broker = 'broker.emqx.io'
 
-client = paho.Client("client-isu-81")
+client = paho.Client("client-isu-1286")
 
 print("Connecting to broker ", broker)
 client.connect(broker)
