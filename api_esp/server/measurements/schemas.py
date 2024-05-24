@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class TemperatureValue(BaseModel):
     value: float
     location: str
     device_id: str
-    timestamp: datetime
+    timestamp: datetime = Field(default_factory=datetime.now)
