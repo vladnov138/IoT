@@ -1,10 +1,16 @@
 from datetime import datetime
+from typing import Union, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class TemperatureValue(BaseModel):
     value: float
     location: str
     device_id: str
-    timestamp: datetime = Field(default_factory=datetime.now)
+    timestamp: Union[datetime, None] = None
+
+
+class DataAnswerModel(BaseModel):
+    values: List[float]
+    location: str

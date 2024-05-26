@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -20,10 +22,14 @@ def post_data(value: schemas.TemperatureValue, db: Session = Depends(get_db)):
     return db_data
 
 
-@router.get("/{location}", response_model=schemas.TemperatureValue)
+@router.get("/{location}", response_model=schemas.DataAnswerModel)
 def get_data(location: str, db: Session = Depends(get_db)):
-    result = db.query(models.TemperatureValueModel).filter(models.TemperatureValueModel.location == location).first()
-    if result is None:
-        raise HTTPException(status_code=404, detail="Location not found")
-    return result
+    result = db.query(models.TemperatureValueModel).filter(models.TemperatureValueModel.location == location).all()
+    # if result is None:
+    #     raise HTTPException(status_code=404, detail="Location not found")
+    data = {
+        "values": [record.value for record in result],
+        "location": location
+    }
+    return data
 
